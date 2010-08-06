@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class puppetlabs-tomcat::sunjdk inherits puppetlabs-tomcat {
+class puppetlabs-tomcat::sunjdk {
   $module    = "puppetlabs-tomcat"
   $class     = "${module}::sunjdk"
   $prefix    = "/etc/puppet/modules"

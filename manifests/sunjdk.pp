@@ -16,12 +16,11 @@ class puppetlabs-tomcat::sunjdk inherits puppetlabs-tomcat {
   $prefix    = "/etc/puppet/modules"
   $p1        = "${prefix}/${module}"
   $p2        = "puppet:///modules/${module}"
-  $installer = "jdk-6u21-linux-${architecture_real}-rpm.bin"
-
   $architecture_real = $architecture ? {
     "x86_64" => "x64",
     default  => $architecture,
   }
+  $installer = "jdk-6u21-linux-${architecture_real}-rpm.bin"
 
   Exec { path => "/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin" }
 
@@ -31,7 +30,7 @@ class puppetlabs-tomcat::sunjdk inherits puppetlabs-tomcat {
       recurse => "false"
   }
   exec { "install-jdk":
-    command     => [ "/var/tmp/${installer}", "-noregister" ],
+    command     => "/var/tmp/${installer} -noregister",
     refreshonly => true,
     subscribe   => File["/var/tmp/${installer}"],
   }

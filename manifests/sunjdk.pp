@@ -25,16 +25,17 @@ class puppetlabs-tomcat::sunjdk {
   }
   $installer = "jdk-6u21-linux-${architecture_real}-rpm.bin"
 
+	File { owner => "0", group => "0", mode  => "0644" }
   Exec { path => "/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin" }
 
   file {
     "/var/tmp/${installer}":
       source  => [ "${p1}/${installer}", "${p2}/${installer}" ],
-      recurse => "false"
   }
   exec { "install-jdk":
     command     => "/var/tmp/${installer} -noregister",
     refreshonly => true,
+		cwd         => "/var/tmp",
     subscribe   => File["/var/tmp/${installer}"],
   }
   # statements

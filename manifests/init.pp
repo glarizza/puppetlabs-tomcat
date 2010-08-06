@@ -14,7 +14,7 @@ class puppetlabs-tomcat {
   $module = "puppetlabs-tomcat"
   $prefix = "/etc/puppet/modules"
 # JJM Look for files on the node filesystem first.
-  $p1 = "${prefix}/${module}"
+  $p1 = "${prefix}/${module}/files"
 # JJM Look for files on the puppetmaster second.
   $p2 = "puppet:///modules/${module}"
 # Our installer media.

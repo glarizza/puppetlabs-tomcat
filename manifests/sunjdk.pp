@@ -17,7 +17,7 @@ class puppetlabs-tomcat::sunjdk {
   $module    = "puppetlabs-tomcat"
   $class     = "${module}::sunjdk"
   $prefix    = "/etc/puppet/modules"
-  $p1        = "${prefix}/${module}"
+  $p1        = "${prefix}/${module}/files"
   $p2        = "puppet:///modules/${module}"
   $architecture_real = $architecture ? {
     "x86_64" => "x64",

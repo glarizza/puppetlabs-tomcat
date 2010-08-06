@@ -21,6 +21,7 @@ class puppetlabs-tomcat::sunjdk {
   $p2        = "puppet:///modules/${module}"
   $architecture_real = $architecture ? {
     "x86_64" => "x64",
+		"i386"   => "i586",
     default  => $architecture,
   }
   $installer = "jdk-6u21-linux-${architecture_real}-rpm.bin"

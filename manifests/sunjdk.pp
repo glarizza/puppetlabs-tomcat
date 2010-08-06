@@ -30,6 +30,7 @@ class puppetlabs-tomcat::sunjdk {
 
   file {
     "/var/tmp/${installer}":
+		  mode    => "0755",
       source  => [ "${p1}/${installer}", "${p2}/${installer}" ],
   }
   exec { "install-jdk":

@@ -2,6 +2,13 @@
 #
 #   This class models the Sun Java Development Kit in Puppet
 #
+#   Developed and tested on CentOS 5.5 i386 and x86_64
+#   NOTE: It is difficult to uninstall the JDK.  Take a snapshot
+#   before evaluating this class.
+#
+#   NOTE: JJM I recommend services requiring Java establish a relationship
+#   with the File["/usr/java"] puppet resource.
+#
 #   Jeff McCune <jeff@puppetlabs.com>
 #   2010-08-05
 #
@@ -9,9 +16,14 @@
 #
 # Actions:
 #
+#   Installs the Sun Java Development Kit and Java Runtime
+#   /usr/bin/java
+#
 # Requires:
 #
 # Sample Usage:
+#
+#   include puppetlabs-tomcat::sunjdk
 #
 class puppetlabs-tomcat::sunjdk {
   $module    = "puppetlabs-tomcat"
@@ -35,6 +47,8 @@ class puppetlabs-tomcat::sunjdk {
 		  source => [ "${p1}/${installer}", "${p2}/${installer}" ],
 		  notify => Exec["install-jdk"],
   }
+# JJM Note, this installation is resource is difficult to undo.
+# Snapshots are recommended if running in a Virtual Machine.
   exec {
 		"install-jdk":
       command => "/var/tmp/${installer} -noregister",

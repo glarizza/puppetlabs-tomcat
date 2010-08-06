@@ -30,14 +30,19 @@ class puppetlabs-tomcat::sunjdk {
 
   file {
     "/var/tmp/${installer}":
-		  mode    => "0755",
-      source  => [ "${p1}/${installer}", "${p2}/${installer}" ],
-			notify  => Exec["install-jdk"],
+		  mode   => "0755",
+		  source => [ "${p1}/${installer}", "${p2}/${installer}" ],
+		  notify => Exec["install-jdk"],
   }
-  exec { "install-jdk":
-    command     => "/var/tmp/${installer} -noregister",
-    refreshonly => true,
-		cwd         => "/var/tmp",
-		creates     => "/usr/java",
+  exec {
+		"install-jdk":
+      command => "/var/tmp/${installer} -noregister",
+      cwd     => "/var/tmp",
+      creates => "/usr/java",
   }
+	file {
+    "/usr/java":
+		  require => Exec["install-jdk"],
+		  ensure  => "directory";
+	}
 }

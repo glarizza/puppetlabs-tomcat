@@ -25,10 +25,11 @@
 #   Java Runtime.  Available in class sunjdk in the pupeptlabs-tomcat
 #   module.
 #
-#   class { "puppetlabs-tomcat::sunjdk": }
+#   File["/usr/java"] provided by class { "puppetlabs-tomcat::sunjdk": }
 #
 # Sample Usage:
 #
+#   include puppetlabs-tomcat::sunjdk
 #   include puppetlabs-tomcat
 #
 class puppetlabs-tomcat {
@@ -68,6 +69,7 @@ class puppetlabs-tomcat {
   }
   service {
     "tomcat":
+      require   => File["/usr/java"],
       hasstatus => true,
       ensure    => running,
       enable    => true;

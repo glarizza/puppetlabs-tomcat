@@ -1,0 +1,17 @@
+Jeff McCune <jeff@puppetlabs.com>
+2010-08-06
+
+Before executing, take a snapshot if you're in a VM.
+Java doesn't uninstall easily.
+
+I developed and tested it with:
+sudo envpuppet -v --modulepath /home/jeff/plabs \
+  /home/jeff/plabs/puppetlabs-tomcat/manifests/site.pp
+
+You get:
+  Sun Java JDK (Java Runtime)
+  Apache Tomcat 5 (The "Official" One, not vendored)
+  Hudson Continuous Integration Web Application
+  http://<ipaddress>:8080/hudson/
+
+

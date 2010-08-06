@@ -2,6 +2,9 @@
 #
 #   This class models the Sun Java Development Kit in Puppet
 #
+#   Jeff McCune <jeff@puppetlabs.com>
+#   2010-08-05
+#
 # Parameters:
 #
 # Actions:

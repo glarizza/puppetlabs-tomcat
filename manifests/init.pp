@@ -34,5 +34,15 @@ class puppetlabs-tomcat {
       creates => "/usr/apache-tomcat-${tomcat_version}",
       require => File["/var/tmp/${installer}"],
   }
-  file { "/usr/tomcat": ensure => "/usr/apache-tomcat-${tomcat_version}" }
+  file {
+    "/usr/tomcat":
+      ensure  => "/usr/apache-tomcat-${tomcat_version}",
+      require => Exec["unpack-tomcat"];
+    "/etc/init.d/tomcat":
+      mode    => "0755",
+      file    => [ "${p1}/tomcat-init-script", "${p2}/tomcat-init-script" ],
+      require => File["/usr/tomcat"],
+      before  => Service["tomcat"];
+
+  }
 }

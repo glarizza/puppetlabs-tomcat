@@ -1,6 +1,10 @@
 #!/bin/bash
+#
 # This is the init script for starting up the
-#  Jakarta Tomcat server
+# Jakarta Tomcat server
+#
+# Jeff McCune <jeff@puppetlabs.com>
+# 2010-08-05
 #
 # chkconfig: 345 91 10
 # description: Starts and stops the Tomcat daemon.
@@ -16,13 +20,15 @@
 # Check that networking is up.
 [ "${NETWORKING}" = "no" ] && exit 0
 
+# JJM Export this to get the pid.
+export CATALINA_PID=/var/run/tomcat.pid
+
 # Here I installed Tomcat 5
 tomcat=/usr/tomcat
 startup=$tomcat/bin/startup.sh
 shutdown=$tomcat/bin/shutdown.sh
 
-# Link created by the Sun JRE rmp
-export JAVA_HOME=/usr/java/latest
+export JAVA_HOME=/usr/java/default
 
 start(){
  echo -n $"Starting Tomcat service: "
@@ -33,7 +39,7 @@ start(){
 }
 
 stop(){
- action $"Stopping Tomcat service: " $shutdown 
+ action $"Stopping Tomcat service: " $shutdown
  RETVAL=$?
  echo
 }
@@ -53,8 +59,8 @@ stop)
  stop
  ;;
 status)
-      # This doesn't work ;)
- status tomcat
+ status -p ${CATALINA_PID}
+ RETVAL=$?
  ;;
 restart)
  restart
@@ -64,4 +70,4 @@ restart)
  exit 1
 esac
 
-exit 0
+exit $RETVAL

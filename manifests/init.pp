@@ -1,14 +1,35 @@
 # Class: puppetlabs-tomcat
 #
 #   This class models the tomcat service in Puppet
+#   Developed and tested on CentOS 5.5 x86_64
+#
+#   Once the service is running, connect to:
+#   http://<ipaddress>:8080/
+#
+#   Don't forget to manage the system firewall.
+#
+#   Jeff McCune <jeff@puppetlabs.com>
+#   2010-08-05
+#   Status: This class is working and properly starts a tomcat process.
 #
 # Parameters:
 #
 # Actions:
 #
+#   Unpacks tomcat into /usr/apache-tomcat-<version>
+#   Links /usr/tomcat to /usr/apache/tomcat-<version>
+#   Manages the tomcat service using the system service manager
+#
 # Requires:
 #
+#   Java Runtime.  Available in class sunjdk in the pupeptlabs-tomcat
+#   module.
+#
+#   class { "puppetlabs-tomcat::sunjdk": }
+#
 # Sample Usage:
+#
+#   include puppetlabs-tomcat
 #
 class puppetlabs-tomcat {
   $module = "puppetlabs-tomcat"
@@ -24,6 +45,7 @@ class puppetlabs-tomcat {
   File { owner => "0", group => "0", mode  => "0644" }
   Exec { path => "/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin" }
 
+# JJM The installer tarball.  Copy from local cache if availalbe.
   file {
     "/var/tmp/${installer}":
       source  => [ "${p1}/${installer}", "${p2}/${installer}" ],

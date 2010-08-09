@@ -1,1 +1,1 @@
-include puppetlabs-tomcat
+include tomcat

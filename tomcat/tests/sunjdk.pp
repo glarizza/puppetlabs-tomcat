@@ -1,1 +1,1 @@
-include puppetlabs-tomcat::sunjdk
+include tomcat::sunjdk

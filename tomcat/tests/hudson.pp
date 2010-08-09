@@ -1,1 +1,1 @@
-include puppetlabs-tomcat::hudson
+include tomcat::hudson

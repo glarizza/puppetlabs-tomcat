@@ -1,5 +1,5 @@
 node default {
-  include puppetlabs-tomcat
-  include puppetlabs-tomcat::sunjdk
-  include puppetlabs-tomcat::hudson
+  include tomcat
+  include tomcat::sunjdk
+  include tomcat::hudson
 }

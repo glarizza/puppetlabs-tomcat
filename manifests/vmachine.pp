@@ -11,6 +11,8 @@
 #   Jeff McCune <jeff@puppetlabs.com>
 #   2010-08-09
 #
+#   TODO: Implement ensure => stopped
+#
 # Parameters:
 #
 # Actions:
@@ -55,10 +57,16 @@ define puppetlabs-tomcat::vmachine($vm_mac=false,
     "/etc/xen/${vm_name_real}":
       content => template("${module}/xenvm.erb");
   }
+# JJM FIXME The logic to create the VM is simple.  It could be more robust.
   exec {
     "lvcreate ${vm_name_real}":
       command => "lvcreate -s ${vm_disk_source} -n ${vm_name_real} -L 10G",
       creates => "${vm_disk_real}",
       require => File["/etc/xen/${vm_name_real}"];
+    "xm create ${vm_name_real}":
+      command => "xm create /etc/xen/${vm_name_real}",
+      unless  => "xm list | grep '^${vm_name_real}'",
+      require => [ File["/etc/xen/${vm_name_real}"],
+                   Exec["lvcreate ${vm_name_real}"], ];
   }
 }

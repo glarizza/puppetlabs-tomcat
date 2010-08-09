@@ -1,4 +1,4 @@
-# Class: puppetlabs-tomcat
+# Class: tomcat
 #
 #   This class models the tomcat service in Puppet
 #   Developed and tested on CentOS 5.5 x86_64
@@ -25,15 +25,15 @@
 #   Java Runtime.  Available in class sunjdk in the pupeptlabs-tomcat
 #   module.
 #
-#   File["/usr/java"] provided by class { "puppetlabs-tomcat::sunjdk": }
+#   File["/usr/java"] provided by class { "tomcat::sunjdk": }
 #
 # Sample Usage:
 #
-#   include puppetlabs-tomcat::sunjdk
-#   include puppetlabs-tomcat
+#   include tomcat::sunjdk
+#   include tomcat
 #
-class puppetlabs-tomcat {
-  $module = "puppetlabs-tomcat"
+class tomcat {
+  $module = "tomcat"
   $prefix = "/etc/puppet/modules"
 # JJM Look for files on the node filesystem first.
   $p1 = "${prefix}/${module}/files"

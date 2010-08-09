@@ -1,4 +1,4 @@
-# Class: puppetlabs-tomcat::hudson
+# Class: tomcat::hudson
 #
 #   This class models the Hudson Continuous Integration
 #   service in Puppet.
@@ -20,15 +20,16 @@
 # Requires:
 #
 #   Service["tomcat"], File["/usr/tomcat"]
-#   which are provided by provided by class { "puppetlabs-tomcat": }
+#   which are provided by provided by class { "tomcat": }
 #
 # Sample Usage:
 #
-#   include "puppetlabs-tomcat::hudson"
+#   include "tomcat::hudson"
 #
-class puppetlabs-tomcat::hudson inherits puppetlabs-tomcat {
-	$module = "puppetlabs-tomcat"
+class tomcat::hudson {
+	$module = "tomcat"
 	$class  = "${module}::hudson"
+  $prefix = "/etc/puppet/modules"
 # JJM Look for files on the node filesystem first.
   $p1 = "${prefix}/${module}/files"
 # JJM Look for files on the puppetmaster second.

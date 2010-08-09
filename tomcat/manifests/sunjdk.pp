@@ -1,4 +1,4 @@
-# Class: puppetlabs-tomcat::sunjdk
+# Class: tomcat::sunjdk
 #
 #   This class models the Sun Java Development Kit in Puppet
 #
@@ -23,10 +23,10 @@
 #
 # Sample Usage:
 #
-#   include puppetlabs-tomcat::sunjdk
+#   include tomcat::sunjdk
 #
-class puppetlabs-tomcat::sunjdk {
-  $module    = "puppetlabs-tomcat"
+class tomcat::sunjdk {
+  $module    = "tomcat"
   $class     = "${module}::sunjdk"
   $prefix    = "/etc/puppet/modules"
   $p1        = "${prefix}/${module}/files"

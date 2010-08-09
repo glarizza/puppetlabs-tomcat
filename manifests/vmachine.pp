@@ -38,6 +38,7 @@ define puppetlabs-tomcat::vmachine($vm_mac=false,
   $vm_disk_source="/dev/VolGroup00/tomcat0",
   $ensure="running",
   $vm_uuid,
+  $hostname="",
   $vm_memory="512") {
 
 # Selections

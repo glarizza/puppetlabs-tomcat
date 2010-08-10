@@ -55,7 +55,11 @@ class tomcat {
     "unpack-tomcat":
       command => "tar -C /usr -x -z -f /var/tmp/${installer}",
       creates => "/usr/apache-tomcat-${tomcat_version}",
-      require => File["/var/tmp/${installer}"],
+      require => File["/var/tmp/${installer}"];
+    "tomcat-check-script":
+      command => "/usr/bin/tomcat-check-script",
+      unless  => "/usr/sbin/lsof -n -i :8080",
+      require => File["/usr/bin/tomcat-check-script"];
   }
   file {
     "/usr/tomcat":
@@ -66,6 +70,10 @@ class tomcat {
       source  => [ "${p1}/tomcat-init-script", "${p2}/tomcat-init-script" ],
       require => File["/usr/tomcat"],
       before  => Service["tomcat"];
+    "/usr/bin/tomcat-check-script":
+      mode => "0755",
+      source => [ "${p1}/tomcat-check-script", "${p2}/tomcat-check-script" ],
+      require => Service["tomcat"];
   }
   service {
     "tomcat":

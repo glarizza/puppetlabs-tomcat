@@ -1,0 +1,76 @@
+Jeff McCune <jeff@puppetlabs.com>
+2010-08-09
+
+Demonstration Instructions
+
+To setup a clean environment for the demo:
+
+Overview
+========
+
+* Puppet is NOT installed into the system.  Use envpuppet wrapper
+* The "special" domU tomcat0 is used as a reference for LVM snapshots.
+* Do not boot tomcat0 unless you need to change the reference LVM disk.
+* Do not remove the tomcat0 LVM block device. (/dev/VolGroup00/tomcat0)
+
+* puppetmasterd and dashboard are running on hyel
+* The VM Host (hypervisor) is running on gunab
+* You should be able to log in as root or james,jeff on all hosts.
+* sudo on all hosts is configured to operate w/o passwords and preserves PATH
+
+Steps to ensure clean operation:
+
+* Log into hyel and start screen as your own user
+* Start puppet master: sudo envpuppet puppetmasterd --no-daemonize --verbose
+* Start the dashboard:
+** cd /opt/puppetlabs/puppet-dashboard
+** sudo script/server -e production
+* NOTE: The dashboard should be run as root for "Trigger puppet run!" button.
+* Clean all VM certificates:
+** for i in 1 2 3 4; do sudo envpuppet puppetca --clean tomcat${i}.puppetlabs.lan; done
+* Log into the dashboard at http://hyel.puppetlabs.lan:3000/
+* Ensure there are no virtnode::tomcat* parameters on node gunab
+** These parameters add VM resources to gunab.  They must not be present when
+we start puppetd in listen mode, or the VM's are created before the demo begins.
+
+* Log into gunab as your own user
+* Start puppetd on gunab, this will be listening to trigger VM creation
+** sudo envpuppet puppetd --no-daemonize --verbose --listen
+** NOTE: Make sure virtnode::tomcat* parameters are removed from the node
+in the dashboard before starting puppetd, or VM's will be created!
+* Ensure no domU is running: sudo xm list
+* If they are running, shutdown with: sudo virsh shutdown tomcatX
+* Once domains are all shutdown, remove the LVM snapshots:
+** sudo /usr/bin/demoreset
+* Make sure certificates are clean on hyel one last time.
+
+At this point, you're ready for the demo.
+
+The demo:
+DHCP is used.  Four entries are present:
+00:16:36:45:21:D0 - tomcat1.puppetlabs.lan
+00:16:36:45:21:D1 - tomcat2.puppetlabs.lan
+00:16:36:45:21:D2 - tomcat3.puppetlabs.lan
+00:16:36:45:21:D3 - tomcat4.puppetlabs.lan
+
+* First, create a node for the VM (tomcat{1,2,3,4}) in the dashboard.
+* Define parameters for the VM:
+** virtnode::id => tomcat1
+** virtnode::vm_mac => "00:16:36:45:21:D0" (NOTE MUST MATCH ID USED!)
+** virtnode::vm_uuid => "xxxx" (Use uuidgen on your mac)
+** virtnode::type => "xen::vmachine"
+
+Once the node is created, associate the VM with the Hypervisor
+* Open node gunab in the dashboard
+* Add the parameter:
+** virtnode::tomcat1 => tomcat1.puppetlabs.lan (FQDN, must match node name in the dashboard)
+** NOTE: any number of 1..4 will work here, so long as the MAC address is set correctly for that node.
+
+Once setup, trigger the VM creation:
+* Click Trigger Puppet Run! on node gunab
+* Refresh reports until gunab reports it has created the VM.
+* Refresh reports until the VM executes puppetd and checks in.
+* Look at the reports to ensure Tomcat was properly managed.
+* Browse to: http://tomcat1.puppetlabs.lan:8080/hudson/
+
+Profit!

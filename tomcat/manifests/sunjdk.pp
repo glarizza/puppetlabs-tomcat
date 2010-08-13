@@ -1,5 +1,8 @@
 # Class: tomcat::sunjdk
 #
+#   Jeff McCune <jeff@puppetlabs.com>
+#   2010-08-05
+#
 #   This class models the Sun Java Development Kit in Puppet
 #
 #   Developed and tested on CentOS 5.5 i386 and x86_64
@@ -7,10 +10,8 @@
 #   before evaluating this class.
 #
 #   NOTE: JJM I recommend services requiring Java establish a relationship
-#   with the File["/usr/java"] puppet resource.
-#
-#   Jeff McCune <jeff@puppetlabs.com>
-#   2010-08-05
+#   with the Class["tomcat::sunjdk"] using a parameter to allow different
+#   java runtime classes.
 #
 # Parameters:
 #
@@ -31,6 +32,7 @@ class tomcat::sunjdk {
   $prefix    = "/etc/puppet/modules"
   $p1        = "${prefix}/${module}/files"
   $p2        = "puppet:///modules/${module}"
+# Translate system architecture facts into strings used within java.
   $architecture_real = $architecture ? {
     "x86_64" => "x64",
 		"i386"   => "i586",
@@ -47,17 +49,21 @@ class tomcat::sunjdk {
 		  source => [ "${p1}/${installer}", "${p2}/${installer}" ],
 		  notify => Exec["install-jdk"],
   }
-# JJM Note, this installation is resource is difficult to undo.
-# Snapshots are recommended if running in a Virtual Machine.
+# JJM Note, this installation is difficult to undo do to the nature of the Sun
+# installer script.  It does not use the system packaging system, so removal
+# is difficult and tedious.
+# Snapshots are recommended for rollback if running in a Virtual Machine.
   exec {
 		"install-jdk":
       command => "/var/tmp/${installer} -noregister",
       cwd     => "/var/tmp",
       creates => "/usr/java",
   }
+# Provide an anchor for resource relationships
 	file {
     "/usr/java":
 		  require => Exec["install-jdk"],
 		  ensure  => "directory";
 	}
 }
+# JJM EOF

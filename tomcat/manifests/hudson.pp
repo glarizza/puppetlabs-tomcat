@@ -44,6 +44,8 @@ class tomcat::hudson {
 		"/usr/tomcat/webapps/hudson.war":
       source  => [ "${p1}/${installer}", "${p2}/${installer}" ],
       require => File["/usr/tomcat"],
+      before  => Class["${module}::service"],
       notify  => Service["tomcat"];
 	}
 }
+# JJM EOF

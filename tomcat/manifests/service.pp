@@ -34,6 +34,10 @@ class tomcat::service {
 # If another class manages the sun java runtime, change this variable.
   $java_runtime_class = "${module}::sunjdk"
   $class  = "${module}::service"
+# JJM Look for files on the node filesystem first.
+  $p1 = "${prefix}/${module}/files"
+# JJM Look for files on the puppetmaster second.
+  $p2 = "puppet:///modules/${module}"
 # Resource defaults.
   File { owner => "0", group => "0", mode  => "0644" }
   Exec { path => "/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin" }

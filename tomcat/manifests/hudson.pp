@@ -29,13 +29,13 @@
 class tomcat::hudson {
 	$module = "tomcat"
 	$class  = "${module}::hudson"
-  $prefix = "/etc/puppet/modules"
+  $prefix = "/etc/puppetlabs/puppet/modules"
 # JJM Look for files on the node filesystem first.
   $p1 = "${prefix}/${module}/files"
 # JJM Look for files on the puppetmaster second.
   $p2 = "puppet:///modules/${module}"
 # Our installer media.
-  $hudson_version = "1.369"
+  $hudson_version = "1.398"
   $installer = "hudson-${hudson_version}.war"
 
   File { owner => "0", group => "0", mode  => "0644" }

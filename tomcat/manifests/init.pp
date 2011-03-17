@@ -42,13 +42,13 @@
 #
 class tomcat {
   $module = "tomcat"
-  $prefix = "/etc/puppet/modules"
+  $prefix = "/etc/puppetlabs/puppet/modules"
 # JJM Look for files on the node filesystem first.
   $p1 = "${prefix}/${module}/files"
 # JJM Look for files on the puppetmaster second.
   $p2 = "puppet:///modules/${module}"
 # Our installer media.
-  $tomcat_version = "5.5.30"
+  $tomcat_version = "5.5.33"
   $installer = "apache-tomcat-${tomcat_version}.tar.gz"
 # Resource defaults.
   File { owner => "0", group => "0", mode  => "0644" }

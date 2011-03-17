@@ -29,16 +29,18 @@
 class tomcat::sunjdk {
   $module    = "tomcat"
   $class     = "${module}::sunjdk"
-  $prefix    = "/etc/puppet/modules"
+  $prefix    = "/etc/puppetlabs/puppet/modules"
   $p1        = "${prefix}/${module}/files"
   $p2        = "puppet:///modules/${module}"
+    $jdkversion = "6u24"
+
 # Translate system architecture facts into strings used within java.
   $architecture_real = $architecture ? {
     "x86_64" => "x64",
 		"i386"   => "i586",
     default  => $architecture,
   }
-  $installer = "jdk-6u21-linux-${architecture_real}-rpm.bin"
+  $installer = "jdk-${jdkversion}-linux-${architecture_real}-rpm.bin"
 
 	File { owner => "0", group => "0", mode  => "0644" }
   Exec { path => "/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin" }

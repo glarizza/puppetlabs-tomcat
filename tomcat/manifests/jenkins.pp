@@ -17,10 +17,13 @@ class tomcat::jenkins {
     file {
         "/etc/yum.repos.d/jenkins.repo":
             source => "puppet:///modules/tomcat/jenkins.repo",
-            notify => Exec["install-jenkins-repo-key"];
+            notify => Exec["install-jenkins-repo-key"],
+            ;
         "/usr/tomcat/webapps/jenkins.war":
-            ensure => link,
-            target => "/usr/lib/jenkins/jenkins.war";
+            ensure  => link,
+            target  => "/usr/lib/jenkins/jenkins.war",
+            require => Package['jenkins'],
+            ;
     }
 
     Exec {

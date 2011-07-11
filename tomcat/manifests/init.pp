@@ -48,7 +48,7 @@ class tomcat {
 # JJM Look for files on the puppetmaster second.
   $p2 = "puppet:///modules/${module}"
 # Our installer media.
-  $tomcat_version = "5.5.30"
+  $tomcat_version = "7.0.16"
   $installer = "apache-tomcat-${tomcat_version}.tar.gz"
 # Resource defaults.
   File { owner => "0", group => "0", mode  => "0644" }

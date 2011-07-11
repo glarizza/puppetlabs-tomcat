@@ -2,6 +2,5 @@
     "license": "GPL2",
     "author": "Jeff McCune <jeff@puppetlabs.com>",
     "version": "1.0.1",
-    "puppetversion": "0.25",
     "source": "http://github.com/puppetlabs/puppetlabs-tomcat"
 }

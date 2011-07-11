@@ -73,6 +73,9 @@ class tomcat {
       mode    => "0755",
       source  => [ "${p1}/tomcat-init-script", "${p2}/tomcat-init-script" ],
       require => File["/usr/tomcat"];
+    "/usr/bin/stop_tomcat.sh":
+      mode    => '0755',
+      source  => [ "${p1}/stop_tomcat.sh", "${p2}/stop_tomcat.sh" ];
   }
 }
 # JJM EOF

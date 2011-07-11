@@ -45,8 +45,9 @@ class tomcat::service {
     "tomcat":
       require   => [ Class["${java_runtime_class}"], Class["${module}"] ],
       hasstatus => true,
+      stop      => '/usr/bin/stop_tomcat.sh',
       ensure    => running,
-      enable    => true;
+      enable    => true,
   }
   file {
     "/usr/bin/tomcat-check-script":

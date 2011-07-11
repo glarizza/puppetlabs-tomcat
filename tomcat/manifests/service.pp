@@ -57,8 +57,8 @@ class tomcat::service {
   }
   exec {
     "tomcat-check-script":
-      command => "/usr/bin/tomcat-check-script",
-      unless  => "/usr/sbin/lsof -n -i :8080",
-      require => File["/usr/bin/tomcat-check-script"];
+      command   => "/usr/bin/tomcat-check-script",
+      unless    => "lsof -n -i :8080",
+      require   => File["/usr/bin/tomcat-check-script"];
   }
 }
